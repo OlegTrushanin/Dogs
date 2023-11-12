@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,8 +37,21 @@ public class MainActivity extends AppCompatActivity {
                     InputStream inputStream = httpURLConnection.getInputStream(); // считываем информацию побайтово
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream); // считываем посимвольно
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader); // считываем построкова
-                    String result = bufferedReader.readLine(); // результат запроса
-                    Log.d("MainActivity1", result);
+                    StringBuilder data = new StringBuilder();
+                    String result;
+                    do{
+                        result = bufferedReader.readLine(); // результат запроса построчно
+                        if(result != null){
+                            data.append(result);
+                        }
+                    }while(result != null);
+
+                    JSONObject jsonObject = new JSONObject(data.toString()); //создаем объект JSON
+                    String message = jsonObject.getString("message"); // получаем значение по ключу
+                    String status = jsonObject.getString("status"); // получаем значение по ключу
+                    Dog dog = new Dog(message,status);
+
+                    Log.d("MainActivity1", dog.toString());
 
 
                 } catch (Exception e) {

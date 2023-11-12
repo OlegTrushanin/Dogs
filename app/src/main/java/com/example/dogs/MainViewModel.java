@@ -98,30 +98,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private Single<Dog> loadDogRx(){
 
-        return Single.fromCallable(new Callable<Dog>() {
-            @Override
-            public Dog call() throws Exception {
-                URL url = new URL(BASE_URL); // получаем адрес в специальном формате
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection(); // открываем соединение
-                InputStream inputStream = httpURLConnection.getInputStream(); // считываем информацию побайтово
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream); // считываем посимвольно
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader); // считываем построкова
-                StringBuilder data = new StringBuilder();
-                String result;
-                do{
-                    result = bufferedReader.readLine(); // результат запроса построчно
-                    if(result != null){
-                        data.append(result);
-                    }
-                }while(result != null);
-
-                JSONObject jsonObject = new JSONObject(data.toString()); //создаем объект JSON
-                String message = jsonObject.getString(MESSAGE_JS); // получаем значение по ключу
-                String status = jsonObject.getString(STATUS_JS); // получаем значение по ключу
-                Dog dog = new Dog(message,status);
-                return dog;
-            }
-        });
+        return ApiFactory.getApiService().loadDogImage();
 
 
     }

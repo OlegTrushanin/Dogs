@@ -45,4 +45,8 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0") // библиотека Glide для скачивания фото
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0") // для запросов в сеть
+    implementation("com.squareup.retrofit2:converter-gson:2.7.0") // для работы с JSON
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0") // связываем ретрофит и javaRx
+
 }

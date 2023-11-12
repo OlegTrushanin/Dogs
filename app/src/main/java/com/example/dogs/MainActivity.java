@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
-
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +27,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        mainViewModel.getInternet().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Отсутствует подключение к интернету",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
 
+
+    }
 
 }

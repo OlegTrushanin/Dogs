@@ -32,6 +32,11 @@ public class MainViewModel extends AndroidViewModel {
 
     private MutableLiveData <Dog> data = new MutableLiveData<>();
 
+    public LiveData <Boolean> getInternet() {
+        return internet;
+    }
+
+    private MutableLiveData <Boolean> internet = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public LiveData<Dog> getData() {
@@ -55,6 +60,8 @@ public class MainViewModel extends AndroidViewModel {
                }, new Consumer<Throwable>() {
                    @Override
                    public void accept(Throwable throwable) throws Throwable {
+
+                       internet.setValue(true);
 
                    }
                });

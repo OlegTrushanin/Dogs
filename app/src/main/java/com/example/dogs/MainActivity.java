@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getInternet().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Toast.makeText(
-                        MainActivity.this,
-                        "Отсутствует подключение к интернету",
-                        Toast.LENGTH_LONG
-                ).show();
+                if (aBoolean) {
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Отсутствует подключение к интернету",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
             }
         });
 

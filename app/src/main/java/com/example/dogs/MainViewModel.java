@@ -64,6 +64,7 @@ public class MainViewModel extends AndroidViewModel {
                    @Override
                    public void accept(Disposable disposable) throws Throwable {
                        isLoading.setValue(true);
+                       internet.setValue(false);
                    }
                })
                .doAfterTerminate(new Action() { //колбэк. Код в методе выолнится когда загрузка будет заверщена

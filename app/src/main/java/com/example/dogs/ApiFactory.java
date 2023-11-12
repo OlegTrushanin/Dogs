@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFactory {
 
-    private static final String BASE_URL = "https://dog.ceo/api/breeds/image/"; // базовая часть URL, всегда должна заканчиваться косой чертой
+    private static final String BASE_URL = "https://dog.ceo/api/breeds/"; // базовая часть URL, всегда должна заканчиваться косой чертой
     private static ApiService apiService;
 
     public static ApiService getApiService(){

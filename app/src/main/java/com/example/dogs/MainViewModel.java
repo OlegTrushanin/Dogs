@@ -21,6 +21,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -55,14 +56,26 @@ public class MainViewModel extends AndroidViewModel {
     }
 
    public void loadDogImage(){
-        isLoading.setValue(true);
+
        Disposable disposable = loadDogRx()
                .subscribeOn(Schedulers.io())
                .observeOn(AndroidSchedulers.mainThread())
+               .doOnSubscribe(new Consumer<Disposable>() { // колбэк. Код в методе выполнится когда произойдет подписка
+                   @Override
+                   public void accept(Disposable disposable) throws Throwable {
+                       isLoading.setValue(true);
+                   }
+               })
+               .doAfterTerminate(new Action() { //колбэк. Код в методе выолнится когда загрузка будет заверщена
+                   @Override
+                   public void run() throws Throwable {
+                       isLoading.setValue(false);
+                   }
+               })
                .subscribe(new Consumer<Dog>() {
                    @Override
                    public void accept(Dog dog) throws Throwable {
-                       isLoading.setValue(false);
+
                        data.setValue(dog);
 
                    }
@@ -71,7 +84,7 @@ public class MainViewModel extends AndroidViewModel {
                    public void accept(Throwable throwable) throws Throwable {
 
                        internet.setValue(true);
-                       isLoading.setValue(false);
+
 
                    }
                });
